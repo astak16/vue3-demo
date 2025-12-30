@@ -1,5 +1,9 @@
 name: Build and Deploy
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -19,10 +23,10 @@ jobs:
         with:
           node-version: "24"
           cache: "pnpm"
-      - name: Get npm cache directory
-        id: npm-cache-dir
+      - name: Get pnpm cache directory
+        id: pnpm-cache-dir
         shell: bash
-        run: echo "dir=$(pnpm config get cache)" >> ${GITHUB_OUTPUT}
+        run: echo "dir=$(pnpm config get store-dir)" >> ${GITHUB_OUTPUT}
       - name: Install and Build 🔧
         run: |
           pnpm install
